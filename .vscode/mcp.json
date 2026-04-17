@@ -1,0 +1,33 @@
+{
+  // MCP (Model Context Protocol) server definitions.
+  // Each entry configures a tool server that Copilot and other AI agents can call.
+  // See: https://modelcontextprotocol.io
+  "servers": {
+    // ── Example 1: filesystem ────────────────────────────────────────────────
+    // Exposes read/write operations on the local filesystem.
+    // Remove or restrict the "roots" array to limit access to specific paths.
+    "filesystem": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "${workspaceFolder}"],
+      "env": {}
+    },
+
+    // ── Example 2: GitHub ────────────────────────────────────────────────────
+    // Provides tools for reading issues, pull requests, and repository data.
+    // Requires a GITHUB_TOKEN environment variable with the appropriate scopes.
+    "github": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-github"],
+      "env": {
+        "GITHUB_TOKEN": "${env:GITHUB_TOKEN}"
+      }
+    },
+
+    // ── Example 3: fetch ─────────────────────────────────────────────────────
+    // Allows the agent to fetch arbitrary URLs (web pages, JSON APIs, etc.).
+    "fetch": {
+      "command": "uvx",
+      "args": ["mcp-server-fetch"]
+    }
+  }
+}
